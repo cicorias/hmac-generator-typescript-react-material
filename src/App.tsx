@@ -25,13 +25,13 @@ function App() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    Generate HMAC 256 Hash
                 </Typography>
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                autoComplete="fname"
+                                autoComplete="firstName"
                                 name="firstName"
                                 variant="outlined"
                                 required
@@ -49,7 +49,7 @@ function App() {
                                 id="lastName"
                                 label="Last Name"
                                 name="lastName"
-                                autoComplete="lname"
+                                autoComplete="lastName"
                             />
                         </Grid>
                         <Grid item xs={12}>
