@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useRef } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -14,8 +14,23 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-function App() {
-    const classes = useStyles();
+import { SHA256, HmacSHA256 } from 'crypto-js';
+
+
+
+const App = () =>{
+    const classes = useStyles()
+    const secret = useRef(null)
+    const key = useRef(null)
+    const result = useRef(null)
+
+    function handleSubmit(){
+        if (null != secret && null != secret.current){
+            console.log("ssa: " + secret.current)
+        }
+        //console.log('Your favorite flavor is: ' + secret.current != null ? secret.current.value : "foo")
+        //.current = "damn"
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -29,27 +44,14 @@ function App() {
                 </Typography>
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                autoComplete="firstName"
-                                name="firstName"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="firstName"
-                                label="First Name"
-                                autoFocus
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="lastName"
-                                label="Last Name"
-                                name="lastName"
-                                autoComplete="lastName"
+                                label="the secret"
+                                inputRef={secret}
+                                //ref={secret}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -57,39 +59,31 @@ function App() {
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
+                                name="key"
+                                label="key"
                                 type="password"
-                                id="password"
-                                autoComplete="current-password"
+                                id="key"
+                                ref={key}
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <FormControlLabel
-                                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                label="I want to receive inspiration, marketing promotions and updates via email."
+                            <TextField
+                                variant="outlined"
+                                fullWidth
+                                name="result"
+                                label="result"
+                                id="result"
+                                ref={result}
                             />
                         </Grid>
                     </Grid>
                     <Button
-                        type="submit"
+                        onClick={handleSubmit}
                         fullWidth
                         variant="contained"
                         color="primary"
-                        className={classes.submit}
-                    >
-                        Sign Up
+                        className={classes.submit}>
+                        Generate
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
@@ -126,6 +120,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function foo(msg: string, key: string) {
+    console.warn("here... with ")
+    return HmacSHA256(msg, key);
+}
 
 function Copyright() {
     return (
